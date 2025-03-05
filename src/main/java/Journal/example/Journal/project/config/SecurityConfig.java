@@ -40,7 +40,7 @@ public class SecurityConfig {
         return http.authorizeHttpRequests(request -> request
                         .requestMatchers("/user/save","/user/register").permitAll()
                         .requestMatchers("/journal/**", "/user/**").authenticated()
-                        .requestMatchers("/admin/**").hasRole("USER")
+                        .requestMatchers("/admin/**").hasAnyRole("ADMIN")
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)

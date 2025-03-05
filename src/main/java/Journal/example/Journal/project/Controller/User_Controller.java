@@ -6,9 +6,10 @@ import Journal.example.Journal.project.Service.User_Service;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,7 +39,7 @@ public class User_Controller {
     @PostMapping("/save")
     public void saveuser(@RequestBody User user) {
 
-        us.saveuser(user);
+        us.SaveNewUser(user);
     }
     @GetMapping("/getall")
     public List<User> getAllUser() {
@@ -60,13 +61,16 @@ public class User_Controller {
     public void deleteByUsername(@PathVariable String username) {
         us.deletebyusername(username);
     }
-    @PutMapping("/updatepass/{username}/{pass}")
-    public void updatePass(@PathVariable String username,@PathVariable String pass) {
-User user=  us.findbyusername(username);
-if(user!=null) {
-    user.setPassword(pass);
-    us.saveuser(user);
-}
+    @PutMapping("/update/{pass}")
+    public void updatePass(@PathVariable String pass) {
+        Authentication auth= SecurityContextHolder.getContext().getAuthentication();
+            String Username=auth.getName();
+            User userindb=us.findbyusername(Username);
+            userindb.setPassword(pass);
+            us.SaveNewUser(userindb);
+        System.out.println(userindb.getPassword());
+
+
     }
 //    NOT COMPLETED
     @DeleteMapping("/deletejournal/{id}")
