@@ -1,8 +1,10 @@
 package Journal.example.Journal.project.Controller;
 
+import Journal.example.Journal.project.API_RESPONSE.WeatherResponse;
 import Journal.example.Journal.project.Entity.User;
 import Journal.example.Journal.project.Repository.User_repo;
 import Journal.example.Journal.project.Service.User_Service;
+import Journal.example.Journal.project.Service.Weather_Service;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +24,8 @@ public class User_Controller {
 
     @Autowired
     User_Service us;
+    @Autowired
+    Weather_Service ws;
 //    WHAT
     private static final PasswordEncoder encoder = new BCryptPasswordEncoder();
     @Autowired
@@ -82,6 +86,14 @@ public class User_Controller {
         String authHeader = request.getHeader("Authorization");
         System.out.println("Authorization Header: " + authHeader);
         return ResponseEntity.ok("Authorized");
+    }
+    @GetMapping("/weather")
+    public ResponseEntity<?> greeting()
+    {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        WeatherResponse weather= ws.getWeather("Delhi");
+
+        return ResponseEntity.ok(weather);
     }
 
 
