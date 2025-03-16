@@ -32,38 +32,7 @@ public class WeatherResponse {
         @JsonProperty("feelslike")
         private int feelslike;
 
-        // Getters and Setters
-        public String getObservationTime() {
-            return observationTime;
-        }
 
-        public void setObservationTime(String observationTime) {
-            this.observationTime = observationTime;
-        }
-
-        public int getTemperature() {
-            return temperature;
-        }
-
-        public void setTemperature(int temperature) {
-            this.temperature = temperature;
-        }
-
-        public List<String> getWeatherDescriptions() {
-            return weatherDescriptions;
-        }
-
-        public void setWeatherDescriptions(List<String> weatherDescriptions) {
-            this.weatherDescriptions = weatherDescriptions;
-        }
-
-        public int getFeelslike() {
-            return feelslike;
-        }
-
-        public void setFeelslike(int feelslike) {
-            this.feelslike = feelslike;
-        }
     }
 }
 

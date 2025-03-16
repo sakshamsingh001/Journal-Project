@@ -20,16 +20,17 @@ public class Weather_Service {
     @Autowired
     private RestTemplate restTemplate;
     @Autowired
-    private AppCache appCache ;
+    private AppCache appCache;
 
-public WeatherResponse getWeather(String city){
+    public WeatherResponse getWeather(String city) {
+        System.out.println(appCache.appcache.get("weather_api"));
+        String finalAPI = appCache.appcache.get("weather_api").replace("CITY", city).replace("API_KEY", APIkey);
+        ResponseEntity<WeatherResponse> response = restTemplate.exchange(finalAPI, HttpMethod.GET, null, WeatherResponse.class);
+        WeatherResponse body = response.getBody();
 
-    String finalAPI=appCache.appcache.get("weather_api").replace("CITY", city).replace("API_KEY" ,APIkey);
-    ResponseEntity<WeatherResponse>response= restTemplate.exchange(finalAPI, HttpMethod.GET,null, WeatherResponse.class);
-WeatherResponse body=response.getBody();
-
-return body;
-}
+        System.out.println("this is " + APIkey);
+        return body;
+    }
 
 
 }
